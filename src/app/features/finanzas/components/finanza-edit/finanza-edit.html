@@ -1,0 +1,123 @@
+<div class="p-8 bg-[#f5f6fb] min-h-screen font-sans flex items-start justify-center">
+  <div class="w-full max-w-5xl bg-white rounded-2xl shadow-sm border border-slate-200 mt-6 overflow-hidden flex flex-col md:flex-row">
+    
+    <div class="w-full md:w-2/5 bg-slate-50 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
+      
+      <button type="button" (click)="router.navigate(['/finanzas/lista'])" class="text-sm font-medium text-blue-600 hover:text-blue-800 mb-8 flex items-center gap-1 transition-colors w-fit">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Volver al listado
+      </button>
+
+      <h2 class="text-2xl font-bold text-slate-800 tracking-tight mb-3">Edición de Expediente</h2>
+      <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+        Modifica los datos financieros o actualiza la decisión final sobre esta solicitud. Ten en cuenta que los cambios quedan registrados en el historial del sistema.
+      </p>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-3">
+          <div class="p-2 bg-blue-100 text-blue-700 rounded-lg mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Ajustes Financieros</h4>
+            <p class="text-xs text-slate-500 mt-1">Si modificas los ingresos o deudas, asegúrate de que los nuevos valores coincidan con los soportes documentales recientes.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="p-2 bg-amber-100 text-amber-700 rounded-lg mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Cambio de Estado</h4>
+            <p class="text-xs text-slate-500 mt-1">Evita aprobar solicitudes con un nivel de riesgo "MUY ALTO" sin la debida autorización de gerencia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full md:w-3/5 p-8">
+      
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+          Solicitud <span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-lg font-mono">#{{id}}</span>
+        </h2>
+      </div>
+
+      <form [formGroup]="editForm" (ngSubmit)="guardar()" class="space-y-6">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Cliente Principal</label>
+          <div class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+              {{nombreCliente.charAt(0)}}
+            </div>
+            {{nombreCliente}}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Ingresos (USD)</label>
+            <input 
+              formControlName="ingresosMensuales" 
+              type="number" 
+              class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all placeholder-slate-400"
+              placeholder="Ej: 5000">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Deudas (USD)</label>
+            <input 
+              formControlName="deudasActuales" 
+              type="number" 
+              class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all placeholder-slate-400"
+              placeholder="Ej: 1500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Estado de Resolución</label>
+          <div class="relative">
+            <select 
+              formControlName="estadoSolicitud" 
+              class="w-full border border-slate-300 rounded-lg p-3 pr-10 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all bg-white appearance-none cursor-pointer font-medium">
+              <option value="APROBADO">🟢 APROBADO</option>
+              <option value="PENDIENTE">⚪ PENDIENTE</option>
+              <option value="RECHAZADO">🔴 RECHAZADO</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 mt-8">
+          <button 
+            type="button" 
+            (click)="router.navigate(['/finanzas'])" 
+            class="px-5 py-2.5 bg-white border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50 transition-colors text-sm font-semibold">
+            Cancelar
+          </button>
+          
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 bg-[#0044cc] text-white rounded-lg hover:bg-blue-800 transition-colors text-sm font-semibold shadow-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            Guardar Cambios
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>

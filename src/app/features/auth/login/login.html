@@ -1,0 +1,90 @@
+<div class="flex flex-col md:flex-row min-h-screen" style="color: #181c1e;">
+
+  <div class="w-full md:w-1/2 flex flex-col justify-between" style="background-color: #ffffff;">
+
+    <header class="p-8">
+      <div class="text-xl font-bold" style="color: #002045; font-family: 'Inter', sans-serif; letter-spacing: -0.02em;">
+        FinRisk
+      </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-start px-8 md:px-16 lg:px-24">
+      <div class="w-full max-w-md">
+
+        <div class="mb-10">
+          <h1 class="text-3xl font-semibold mb-3" style="color: #001934;">Iniciar Sesión</h1>
+          <p class="text-sm" style="color: #43474e;">Gestión segura de cartera y originación de créditos.</p>
+        </div>
+
+        <div *ngIf="errorMessage"
+          class="mb-6 p-4 rounded-lg text-sm font-medium text-white bg-red-800 border border-red-900">
+          {{ errorMessage }}
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold ml-1 uppercase tracking-wider" style="color: #43474e;">Correo
+              Corporativo</label>
+            <input formControlName="email" type="email" [class.border-red-400]="isInvalid('email')"
+              class="w-full outline-none transition-all text-sm rounded-lg"
+              style="height: 48px; padding: 0 16px; background-color: #f4f6f8; border: 2px solid transparent;"
+              onmouseover="if(this.style.borderColor !== 'rgb(25, 96, 163)') this.style.borderColor='#e0e0e0';"
+              onmouseout="if(this.style.borderColor !== 'rgb(25, 96, 163)') this.style.borderColor='transparent';"
+              onfocus="this.style.borderColor='#1960a3'; this.style.backgroundColor='#ffffff';"
+              onblur="this.style.borderColor='transparent'; this.style.backgroundColor='#f4f6f8';"
+              placeholder="name@organization.com">
+            <p *ngIf="isInvalid('email')" class="text-xs mt-1 ml-1" style="color: #ba1a1a;">{{ getErrorMessage('email')
+              }}</p>
+          </div>
+          <div class="space-y-1.5">
+            <input formControlName="password" type="password" [class.border-red-400]="isInvalid('password')"
+              class="w-full outline-none transition-all text-sm rounded-lg"
+              style="height: 48px; padding: 0 16px; background-color: #f4f6f8; border: 2px solid transparent;"
+              onmouseover="if(this.style.borderColor !== 'rgb(25, 96, 163)') this.style.borderColor='#e0e0e0';"
+              onmouseout="if(this.style.borderColor !== 'rgb(25, 96, 163)') this.style.borderColor='transparent';"
+              onfocus="this.style.borderColor='#1960a3'; this.style.backgroundColor='#ffffff';"
+              onblur="this.style.borderColor='transparent'; this.style.backgroundColor='#f4f6f8';"
+              placeholder="••••••••••••">
+            <p *ngIf="isInvalid('password')" class="text-xs mt-1 ml-1" style="color: #ba1a1a;">
+              {{ getErrorMessage('password') }}
+            </p>
+          </div>
+          <button type="submit" [disabled]="loginForm.invalid"
+            class="w-full rounded-lg font-semibold transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+            style="height: 48px; background-color: #002045; color: #ffffff; font-size: 16px; margin-top: 30px;">
+            Ingresar
+          </button>
+        </form>
+
+        <p class="text-sm mt-8" style="color: #43474e;">
+          ¿No tienes una cuenta? <a routerLink="/register" class="font-semibold hover:underline"
+            style="color: #1960a3;">Regístrate</a>
+        </p>
+
+
+      </div>
+    </main>
+
+    <footer class="p-8">
+      <span class="text-xs" style="color: #74777f;">© 2026 FinRisk Institutional Services. All rights reserved.</span>
+    </footer>
+  </div>
+
+  <div class="hidden md:block md:w-1/2 sticky top-0 overflow-hidden relative" style="height: 100vh;">
+    <img src="./login/flayer.jpg" alt="Corporate office" class="w-full h-full object-cover">
+    <div class="absolute inset-0" style="background-color: rgba(0, 32, 69, 0.4); mix-blend-mode: multiply;"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center p-12 text-center text-white z-10">
+      <div class="space-y-6 max-w-lg">
+        <h2 class="text-4xl font-light tracking-tight leading-tight">
+          Inteligencia que <span class="font-semibold text-blue-200">Anticipa el Riesgo</span>
+        </h2>
+        <div class="w-16 h-1 bg-blue-400 mx-auto rounded-full"></div>
+        <p class="text-lg font-light opacity-90 leading-relaxed">
+          Análisis institucional preciso para la toma de decisiones estratégicas.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
