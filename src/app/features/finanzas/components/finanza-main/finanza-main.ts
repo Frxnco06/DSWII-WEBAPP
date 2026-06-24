@@ -2,11 +2,13 @@ import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FinanzasService } from '../../finanzas.service';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration } from 'chart.js';
 
 @Component({
   selector: 'app-finanza-main',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BaseChartDirective],
   templateUrl: './finanza-main.html'
 })
 export class FinanzaMainComponent implements OnInit {
@@ -18,8 +20,13 @@ export class FinanzaMainComponent implements OnInit {
   aprobados: number = 0;
   rechazados: number = 0;
   scorePromedio: number = 0;
-  
   evaluaciones: any[] = [];
+
+  public chartData: ChartConfiguration<'bar'>['data'] = {
+    labels: [],
+    datasets: [{ data: [], label: 'Score de Riesgo' }]
+  };
+  public chartOptions = { responsive: true };
 
   ngOnInit(): void {
     this.cargarDatos();
@@ -30,7 +37,14 @@ export class FinanzaMainComponent implements OnInit {
       next: (data: any[]) => {
         this.evaluaciones = data.slice(0, 3);
         this.calcularResumen(data);
-        this.cdr.detectChanges();
+        
+        setTimeout(() => {
+          this.chartData = {
+            labels: data.map(e => e.nombreCliente),
+            datasets: [{ data: data.map(e => e.puntajeScore), label: 'Score de Riesgo' }]
+          };
+          this.cdr.detectChanges();
+        }, 0);
       },
       error: (err) => console.error('Error al cargar evaluaciones:', err)
     });
@@ -56,5 +70,6 @@ export class FinanzaMainComponent implements OnInit {
   }
   
   editar(id: any): void {
-    this.router.navigate(['/finanzas/editar', id]);  }
+    this.router.navigate(['/finanzas/editar', id]);
+  }
 }
