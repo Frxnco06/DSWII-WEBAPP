@@ -1,5 +1,4 @@
 <div class="p-8 bg-[#f5f6fb] min-h-screen font-sans">
-  
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
       <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Centro de Control de Riesgos</h1>
@@ -17,18 +16,13 @@
 
   <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm mb-8 relative overflow-hidden">
     <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-blue-50 rounded-full blur-2xl opacity-60"></div>
-    
     <div class="relative z-10 md:w-3/4">
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wide mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
-          <path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" />
-        </svg>
         Motor de Scoring Activo
       </span>
       <h2 class="text-2xl font-bold text-slate-800 mb-3">Sistema de Evaluación de Créditos Pro</h2>
       <p class="text-slate-600 text-sm leading-relaxed mb-6">
         Plataforma integral para analizar el perfil financiero, capacidad de pago e historial de solicitantes. 
-        Toma decisiones basadas en datos estructurados y minimiza el riesgo de tu cartera con nuestro algoritmo de puntuación en tiempo real.
       </p>
     </div>
   </div>
@@ -75,6 +69,13 @@
     </div>
   </div>
 
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+    <h3 class="text-lg font-bold text-slate-800 mb-4">Análisis de Scores</h3>
+    <div style="width: 100%; height: 300px;">
+      <canvas baseChart [data]="chartData" [options]="chartOptions" [type]="'bar'"></canvas>
+    </div>
+  </div>
+
   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
     <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white">
       <h3 class="text-lg font-bold text-slate-800">Evaluaciones Recientes</h3>
@@ -85,28 +86,28 @@
       <table class="w-full text-left border-collapse">
         <thead class="bg-white border-b border-slate-200 text-slate-500 text-xs font-bold uppercase tracking-wide">
           <tr>
-            <th class="px-6 py-4 whitespace-nowrap">Solicitante</th>
-            <th class="px-6 py-4 whitespace-nowrap">Monto</th>
-            <th class="px-6 py-4 text-center whitespace-nowrap">Score</th>
-            <th class="px-6 py-4 text-center whitespace-nowrap">Estado</th>
-            <th class="px-6 py-4 text-center whitespace-nowrap">Acciones</th>
+            <th class="px-6 py-4">Solicitante</th>
+            <th class="px-6 py-4">Ingresos</th>
+            <th class="px-6 py-4 text-center">Score</th>
+            <th class="px-6 py-4 text-center">Estado</th>
+            <th class="px-6 py-4 text-center">Acciones</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
           <tr *ngFor="let item of evaluaciones" class="hover:bg-slate-50 transition-colors">
             <td class="px-6 py-4">
-              <p class="text-sm font-medium text-slate-800">{{ item.nombre }}</p>
-              <p class="text-xs text-slate-500">{{ item.rut }}</p>
+              <p class="text-sm font-medium text-slate-800">{{ item.nombreCliente }}</p>
+              <p class="text-xs text-slate-500">{{ item.dniCliente }}</p>
             </td>
-            <td class="px-6 py-4 text-sm text-slate-700 font-medium">{{ item.monto | currency }}</td>
+            <td class="px-6 py-4 text-sm text-slate-700 font-medium">{{ item.ingresosMensuales | currency }}</td>
             <td class="px-6 py-4 text-center">
-              <div class="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-slate-300 text-sm font-bold text-slate-600">{{ item.score }}</div>
+              <div class="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-blue-100 bg-blue-50 text-sm font-bold text-blue-600">{{ item.puntajeScore }}</div>
             </td>
             <td class="px-6 py-4 text-center">
-              <span class="px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-wide bg-slate-100 text-slate-600 border border-slate-200">{{ item.estado }}</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-wide bg-slate-100 text-slate-600 border border-slate-200">{{ item.estadoSolicitud }}</span>
             </td>
             <td class="px-6 py-4 flex items-center justify-center gap-3 text-slate-400">
-              <button (click)="editar(item.id)" class="p-1.5 hover:text-blue-600 rounded">
+              <button (click)="editar(item.idEvalucion)" class="p-1.5 hover:text-blue-600 rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
               </button>
             </td>
