@@ -22,7 +22,7 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      contrasenia: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -48,12 +48,13 @@ export class LoginComponent {
         next: (res) => {
           console.log("Éxito", res);
           localStorage.setItem('token', res.token);
-          this.router.navigate(['/finanzas']); 
+          this.router.navigate(['/productos']); 
         },
         error: (err) => {
           if (err.status === 401) {
             this.errorMessage = "Credenciales incorrectas, intenta de nuevo.";
-          } else {
+          }
+          else {
             this.errorMessage = "Ocurrió un error inesperado.";
           }
           this.cdRef.detectChanges();

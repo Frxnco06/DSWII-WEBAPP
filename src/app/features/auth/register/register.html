@@ -1,6 +1,5 @@
 <div class="flex flex-col md:flex-row min-h-screen" style="color: #181c1e;">
 
-    <!-- COLUMNA IZQUIERDA: Registro -->
     <div class="w-full md:w-1/2 flex flex-col justify-between" style="background-color: #ffffff;">
 
         <header class="p-8">
@@ -26,11 +25,10 @@
 
                 <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-6">
 
-                    <!-- Nombre -->
                     <div class="space-y-1.5">
                         <label class="block text-xs font-semibold ml-1 uppercase tracking-wider"
                             style="color: #43474e;">Nombre Completo</label>
-                        <input formControlName="nombre" type="text" [class.border-red-400]="isInvalid('nombre')"
+                        <input formControlName="nombreCompleto" type="text" [class.border-red-400]="isInvalid('nombreCompleto')"
                             class="w-full outline-none transition-all text-sm rounded-lg"
                             style="height: 48px; padding: 0 16px; background-color: #f4f6f8; border: 2px solid transparent;"
                             onmouseover="if(this.style.borderColor !== 'rgb(25, 96, 163)') this.style.borderColor='#e0e0e0';"
@@ -38,10 +36,9 @@
                             onfocus="this.style.borderColor='#1960a3'; this.style.backgroundColor='#ffffff';"
                             onblur="this.style.borderColor='transparent'; this.style.backgroundColor='#f4f6f8';"
                             placeholder="John Doe">
-                        <p *ngIf="isInvalid('nombre')" class="text-xs mt-1 ml-1" style="color: #ba1a1a;">{{
-                            getErrorMessage('nombre') }}</p>
+                        <p *ngIf="isInvalid('nombreCompleto')" class="text-xs mt-1 ml-1" style="color: #ba1a1a;">{{
+                            getErrorMessage('nombreCompleto') }}</p>
                     </div>
-                    <!-- Email -->
                     <div class="space-y-1.5">
                         <label class="block text-xs font-semibold ml-1 uppercase tracking-wider"
                             style="color: #43474e;">Correo Corporativo</label>
@@ -56,11 +53,10 @@
                         <p *ngIf="isInvalid('email')" class="text-xs mt-1 ml-1" style="color: #ba1a1a;">{{
                             getErrorMessage('email') }}</p>
                     </div>
-                    <!-- Password -->
                     <div class="space-y-1.5">
                         <label class="text-xs font-semibold ml-1 uppercase tracking-wider"
                             style="color: #43474e;">Contraseña</label>
-                        <input formControlName="password" type="password" [class.border-red-400]="isInvalid('password')"
+                        <input formControlName="contrasenia" type="password" [class.border-red-400]="isInvalid('contrasenia')"
                             class="w-full outline-none transition-all text-sm rounded-lg"
                             style="height: 48px; padding: 0 16px; background-color: #f4f6f8; border: 2px solid transparent;"
                             onmouseover="if(this.style.borderColor !== 'rgb(25, 96, 163)') this.style.borderColor='#e0e0e0';"
@@ -68,8 +64,8 @@
                             onfocus="this.style.borderColor='#1960a3'; this.style.backgroundColor='#ffffff';"
                             onblur="this.style.borderColor='transparent'; this.style.backgroundColor='#f4f6f8';"
                             placeholder="••••••••••••">
-                        <p *ngIf="isInvalid('password')" class="text-xs mt-1 ml-1" style="color: #b11b1b;">{{
-                            getErrorMessage('password') }}</p>
+                        <p *ngIf="isInvalid('contrasenia')" class="text-xs mt-1 ml-1" style="color: #b11b1b;">{{
+                            getErrorMessage('contrasenia') }}</p>
                     </div>
 
                     <button type="submit" [disabled]="registerForm.invalid"
@@ -92,7 +88,6 @@
         </footer>
     </div>
 
-    <!-- COLUMNA DERECHA: Imagen -->
     <div class="hidden md:block md:w-1/2 sticky top-0 overflow-hidden relative" style="height: 100vh;">
         <img src="./login/flayer.jpg" alt="Corporate office" class="w-full h-full object-cover">
         <div class="absolute inset-0" style="background-color: rgba(0, 32, 69, 0.4); mix-blend-mode: multiply;"></div>

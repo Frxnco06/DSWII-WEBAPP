@@ -1,30 +1,30 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FinanzasService } from '../../finanzas.service';
+import { ProductoCreditoService } from '../../creditos.service';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-finanza-detail',
+  selector: 'app-producto-detail',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './finanzas-detail.html'
+  templateUrl: './producto-detail.html'
 })
-export class FinanzaDetailComponent implements OnInit {
+export class ProductoDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   public router = inject(Router);
-  private finanzasService = inject(FinanzasService);
+  private productoService = inject(ProductoCreditoService);
   
-  finanza$!: Observable<any>;
+  productos$!: Observable<any>;
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.finanza$ = this.finanzasService.getById(id);
+      this.productos$ = this.productoService.getById(id);
     }
   }
     cancelar() {
-    this.router.navigate(['/finanzas/lista']);
+    this.router.navigate(['/productos/lista']);
   }
 
 

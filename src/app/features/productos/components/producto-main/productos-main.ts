@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FinanzasService } from '../../finanzas.service';
+import { ProductoCreditoService } from '../../creditos.service';
 
 @Component({
-  selector: 'app-finanza-main',
+  selector: 'app-productos-main',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './finanza-main.html'
+  templateUrl: './productos-main.html'
 })
-export class FinanzaMainComponent implements OnInit {
+export class ProductosMainComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
-  private finanzasService = inject(FinanzasService);
+  private productoService = inject(ProductoCreditoService);
   private router = inject(Router);
 
   totalEvaluaciones: number = 0;
@@ -26,7 +26,7 @@ export class FinanzaMainComponent implements OnInit {
   }
 
   cargarDatos(): void {
-    this.finanzasService.getAll().subscribe({
+    this.productoService.getAll().subscribe({
       next: (data: any[]) => {
         this.evaluaciones = data.slice(0, 3);
         this.calcularResumen(data);
@@ -48,13 +48,13 @@ export class FinanzaMainComponent implements OnInit {
   }
 
   navegarACrear(): void {
-    this.router.navigate(['/finanzas/crear']);
+    this.router.navigate(['/productos/crear']);
   }
 
   navegarALista(): void {
-    this.router.navigate(['/finanzas/lista']);
+    this.router.navigate(['/productos/lista']);
   }
   
   editar(id: any): void {
-    this.router.navigate(['/finanzas/editar', id]);  }
+    this.router.navigate(['/productos/editar', id]);  }
 }

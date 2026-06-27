@@ -1,6 +1,6 @@
 export interface LoginRequest {
   email: string;
-  password: string;
+  contrasenia: string;
 }
 
 export interface LoginResponse {
@@ -8,9 +8,9 @@ export interface LoginResponse {
 }
 
 export interface RegisterRequest {
-  nombre: string;
+  nombreCompleto: string;
   email: string;
-  password: string;
+  contrasenia: string;
 }
 
 export interface RegisterResponse {

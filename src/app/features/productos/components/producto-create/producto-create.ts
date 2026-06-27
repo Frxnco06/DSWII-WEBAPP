@@ -2,51 +2,39 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FinanzasService } from '../../finanzas.service';
+import { ProductoCreditoService } from '../../creditos.service';
 
 @Component({
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './finanza-create.html'
+  templateUrl: './producto-create.html'
 })
-export class FinanzaCreateComponent {
+export class ProductoCreateComponent {
   private fb = inject(FormBuilder);
-  private service = inject(FinanzasService);
+  private service = inject(ProductoCreditoService);
   private router = inject(Router);
 
 
-  createForm = this.fb.group({
-nombreCliente: ['', [
-      Validators.required, 
-      Validators.minLength(3),
-      Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$')
-    
-    ]],
-      
-
-dniCliente: ['', [
-      Validators.required, 
-      Validators.pattern('^[0-9]{8}$'),
-      Validators.minLength(8),
-      Validators.maxLength(8)
-    ]],
-    ingresosMensuales: [0, [Validators.required, Validators.min(0.01)]],
-    deudasActuales: [0, [Validators.required, Validators.min(0)]],
-    estadoSolicitud: ['PENDIENTE']
-  });
+createForm = this.fb.group({
+  nombreProducto: ['', [Validators.required, Validators.minLength(3)]],
+  montoMinimo: [0, [Validators.required, Validators.min(0.01)]],
+  montoMaximo: [0, [Validators.required, Validators.min(0.01)]],
+  tasaInteres: [0, [Validators.required, Validators.min(0.01)]],
+  scoreMinimo: [0, [Validators.required, Validators.min(0)]]
+}); 
 
   crear() {
     if (this.createForm.valid) {
       this.service.create(this.createForm.value).subscribe({
         next: () => {
-          alert('Evaluación creada exitosamente');
-          this.router.navigate(['/finanzas']);
+          alert('Credito creado exitosamente');
+          this.router.navigate(['/productos/lista']);
         },
         error: (err) => {
           if (err.status === 400 && err.error) {
             this.mapearErroresBackend(err.error);
           } else {
-            alert('Error al guardar la nueva solicitud');
+            alert('Error al guardar el nuevo credito');
           }
         }
       });
@@ -65,6 +53,6 @@ dniCliente: ['', [
   }
 
   cancelar() {
-    this.router.navigate(['/finanzas/lista']);
+    this.router.navigate(['/productos/lista']);
   }
 }

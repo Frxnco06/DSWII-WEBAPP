@@ -15,28 +15,28 @@ export const routes: Routes = [
 
   
 { 
-  path: 'finanzas', 
+  path: 'productos',
   loadComponent: () => import('./shared/components/layout/dashboard/dashboard').then(m => m.DashboardComponent),
   children: [
    { 
       path: '', 
-      loadComponent: () => import('./features/finanzas/components/finanza-main/finanza-main').then(m => m.FinanzaMainComponent) 
+      loadComponent: () => import('./features/productos/components/producto-main/productos-main').then(m => m.ProductosMainComponent) 
     },
-    { 
+    {
       path: 'lista', 
-      loadComponent: () => import('./features/finanzas/components/finanza-list/finanza-list').then(m => m.FinanzaList) 
+      loadComponent: () => import('./features/productos/components/producto-list/producto-list').then(m => m.ProductoList) 
     },
     { 
         path: 'detalle/:id', 
-        loadComponent: () => import('./features/finanzas/components/finanzas-detail/finanzas-detail').then(m => m.FinanzaDetailComponent) 
+        loadComponent: () => import('./features/productos/components/producto-detail/producto-detail').then(m => m.ProductoDetailComponent) 
       },
       { 
         path: 'editar/:id', 
-        loadComponent: () => import('./features/finanzas/components/finanza-edit/finanza-edit').then(m => m.FinanzaEditComponent) 
+        loadComponent: () => import('./features/productos/components/producto-edit/producto-edit').then(m => m.ProductoEditComponent) 
       },
       {
         path: 'crear',
-        loadComponent: () => import('./features/finanzas/components/finanza-create/finanza-create').then(m => m.FinanzaCreateComponent) 
+        loadComponent: () => import('./features/productos/components/producto-create/producto-create').then(m => m.ProductoCreateComponent) 
       }
   ]
 },

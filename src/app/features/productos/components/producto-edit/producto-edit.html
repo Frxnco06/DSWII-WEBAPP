@@ -1,0 +1,83 @@
+<div class="p-8 bg-[#f5f6fb] min-h-screen font-sans flex items-start justify-center">
+  <div class="w-full max-w-5xl bg-white rounded-2xl shadow-sm border border-slate-200 mt-6 overflow-hidden flex flex-col md:flex-row">
+    
+    <div class="w-full md:w-2/5 bg-slate-50 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
+      
+      <button type="button" (click)="router.navigate(['/productos/lista'])" class="text-sm font-medium text-blue-600 hover:text-blue-800 mb-8 flex items-center gap-1 transition-colors w-fit">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Volver al listado
+      </button>
+
+      <h2 class="text-2xl font-bold text-slate-800 tracking-tight mb-3">Edición de Producto</h2>
+      <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+        Modifica los parámetros financieros del producto. Estos cambios impactarán directamente en las reglas de evaluación automática del sistema.
+      </p>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-3">
+          <div class="p-2 bg-blue-100 text-blue-700 rounded-lg mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Parámetros Financieros</h4>
+            <p class="text-xs text-slate-500 mt-1">Asegúrate de que los rangos de montos y tasa sean coherentes con la estrategia comercial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full md:w-3/5 p-8">
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+          Producto <span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-lg font-mono">#{{id}}</span>
+        </h2>
+      </div>
+
+      <form [formGroup]="editForm" (ngSubmit)="guardar()" class="space-y-6">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Nombre del Producto</label>
+          <input formControlName="nombreProducto" type="text" class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Monto Mínimo</label>
+            <input formControlName="montoMinimo" type="number" class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Monto Máximo</label>
+            <input formControlName="montoMaximo" type="number" class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Tasa de Interés (%)</label>
+            <input formControlName="tasaInteres" type="number" class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Score Mínimo</label>
+            <input formControlName="scoreMinimo" type="number" class="w-full border border-slate-300 rounded-lg p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all">
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 mt-8">
+          <button type="button" (click)="cancelar()" class="px-5 py-2.5 bg-white border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50 transition-colors text-sm font-semibold">
+            Cancelar
+          </button>
+          <button type="submit" [disabled]="editForm.invalid" class="px-5 py-2.5 bg-[#0044cc] text-white rounded-lg hover:bg-blue-800 transition-colors text-sm font-semibold shadow-sm flex items-center gap-2 disabled:opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

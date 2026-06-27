@@ -1,0 +1,92 @@
+<div class="p-8 bg-[#f5f6fb] min-h-screen font-sans flex items-start justify-center" *ngIf="productos$ | async as producto">
+ 
+  <div class="w-full max-w-5xl bg-white rounded-2xl shadow-sm border border-slate-200 mt-6 overflow-hidden flex flex-col md:flex-row">
+    
+    <div class="w-full md:w-2/5 bg-slate-50 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
+      
+      <button type="button" (click)="cancelar()" class="text-sm font-medium text-blue-600 hover:text-blue-800 mb-8 flex items-center gap-1.5 transition-colors w-fit">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+        Volver al listado
+      </button>
+
+      <h2 class="text-2xl font-bold text-slate-800 tracking-tight mb-3">Ficha de Producto</h2>
+      <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+        Visualización de los parámetros configurados para este producto de crédito. Estos valores determinan los límites y condiciones de financiamiento ofrecidos.
+      </p>
+
+      <div class="flex items-start gap-3 p-4 bg-white rounded-xl border border-slate-200 shadow-sm mt-auto">
+        <div class="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-slate-800">Parámetros Vigentes</h4>
+          <p class="text-xs text-slate-500 mt-1">Valores configurados según las políticas de riesgo actuales del sistema.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full md:w-3/5 p-8">
+      
+      <div class="mb-8 border-b border-slate-100 pb-6 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+          Detalle del Producto
+        </h2>
+        <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-md text-sm font-bold font-mono tracking-wider border border-blue-100">
+          ID: {{producto.productoId}}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <div class="p-5 border border-slate-200 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 text-slate-500 mb-3">
+            <span class="text-xs font-bold uppercase tracking-wide">Producto</span>
+          </div>
+          <p class="text-lg font-bold text-slate-900">{{producto.nombreProducto}}</p>
+        </div>
+
+        <div class="p-5 border border-slate-200 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 text-slate-500 mb-3">
+            <span class="text-xs font-bold uppercase tracking-wide">Score Mínimo</span>
+          </div>
+          <p class="text-lg font-bold text-slate-900">{{producto.scoreMinimo}} puntos</p>
+        </div>
+
+        <div class="p-5 border border-slate-200 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 text-green-600 mb-3">
+            <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Monto Mínimo</span>
+          </div>
+          <p class="text-xl font-black text-slate-800">{{producto.montoMinimo | currency:'USD'}}</p>
+        </div>
+
+        <div class="p-5 border border-slate-200 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-2 text-green-600 mb-3">
+            <span class="text-xs font-bold uppercase tracking-wide text-slate-500">Monto Máximo</span>
+          </div>
+          <p class="text-xl font-black text-slate-800">{{producto.montoMaximo | currency:'USD'}}</p>
+        </div>
+
+        <div class="p-5 border border-slate-200 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow md:col-span-2">
+          <div class="flex items-center gap-2 text-slate-500 mb-3">
+            <span class="text-xs font-bold uppercase tracking-wide">Tasa de Interés Anual</span>
+          </div>
+          <p class="text-2xl font-black text-[#0044cc]">{{producto.tasaInteres}}% TEA</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!(productos$ | async)" class="p-8 bg-[#f5f6fb] min-h-screen flex flex-col items-center justify-center font-sans">
+  <svg class="animate-spin h-10 w-10 text-[#0044cc] mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+  <h3 class="text-lg font-bold text-slate-800 mb-1">Cargando información</h3>
+  <p class="text-sm text-slate-500">Recuperando detalles del producto, por favor espera...</p>
+</div>

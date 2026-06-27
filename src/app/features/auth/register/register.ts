@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './register.html',
-})
-export class RegisterComponent {
-  registerForm: FormGroup;
+})        
+export class RegisterComponent {    
+  registerForm: FormGroup;    
   errorMessage: string = '';
 
   constructor(
@@ -21,9 +21,9 @@ export class RegisterComponent {
     private cdRef: ChangeDetectorRef
   ) {
     this.registerForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(10)]],
+      nombreCompleto: ['', [Validators.required, Validators.minLength(10)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      contrasenia: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -56,7 +56,11 @@ export class RegisterComponent {
             this.errorMessage = "Este correo ya está registrado.";
           } else if (err.status === 400) {
             this.errorMessage = "Datos inválidos, revisa el formulario.";
-          } else {
+          } 
+          else if (err.status === 500) {
+            this.errorMessage = "Este correo ya se encuentra registrado en nuestro sistema.";
+          }
+          else {
             this.errorMessage = "Ocurrió un error inesperado.";
           }
           this.cdRef.detectChanges();
