@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { EvaluacionStateService } from '../../evaluacion-state.service';
 import { ProductoCreditoService } from '../../../productos/creditos.service';
+import { ApiService } from '../../externo.service';
 
 @Component({
   selector: 'app-evaluacion-resultado',
@@ -15,7 +16,7 @@ export class EvaluacionResultado implements OnInit {
   private productoService = inject(ProductoCreditoService);
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
-
+  private externoService = inject(ApiService);
   cliente: any;
   productosAptos: any[] = [];
   scoreFinal: number = 0;
@@ -26,45 +27,60 @@ export class EvaluacionResultado implements OnInit {
       this.router.navigate(['/evaluacion/buscar']);
       return;
     }
-    
     this.cliente = data.cliente;
     this.procesarEvaluacion();
   }
 
-private procesarEvaluacion() {
-  this.productoService.getAll().subscribe((productos: any[]) => {
-    this.scoreFinal = this.calcularScore(this.cliente);
-    
-    const filtrados = productos.filter((p: any) => {
-      return this.scoreFinal >= Number(p.scoreMinimo);
+  
+  private procesarEvaluacion() {
+    this.productoService.getAll().subscribe((productos: any[]) => {
+      this.scoreFinal = this.calcularScore(this.cliente);
+
+      const filtrados = productos.filter((p: any) => {
+        return this.scoreFinal >= Number(p.scoreMinimo);
+      });
+
+      this.productosAptos = [...filtrados];
+      this.cdr.detectChanges();
+
+      if (this.productosAptos.length > 0) {
+        this.registrarEvaluacion(this.productosAptos[0]);
+      }
     });
+  }
 
-    this.productosAptos = [...filtrados];
+  registrarEvaluacion(producto: any) {
+    const payload = {
+      dni: this.cliente.dni,
+      productoId: producto.productoId,
+      scoreObtenido: this.scoreFinal,
+      comentarios: 'Evaluación automática'
+    };
 
-    this.cdr.detectChanges();
+    this.externoService.guardarEvaluacion(payload).subscribe({
+      next: (res) => {
+        console.log('✅ Evaluación guardada:', res);
+        alert('Evaluación registrada correctamente');
+      },
+      error: (err) => {
+        console.error('❌ Error al guardar:', err);
+      }
+    });
+  }
 
-    console.log('Score Final:', this.scoreFinal);
-    console.log('Productos aptos:', this.productosAptos);
-  });
+  private calcularScore(historial: any): number {
+    const scoreBase = 1000;
+    const deuda = Number(historial.deudaTotal) || 0;
+    const mora = Number(historial.diasMora) || 0;
+    const empresas = Number(historial.numeroEmpresas) || 0;
+    const sueldo = Number(historial.sueldo) || 0;
+
+    const penDeuda = deuda / 50;
+    const penMora = mora * 2;
+    const penEmpresas = empresas * 20;
+    const bonoSueldo = (sueldo - 1130) / 100;
+
+    const scoreFinal = scoreBase - penDeuda - penMora - penEmpresas + bonoSueldo;
+    return Math.max(0, Math.min(1000, Math.round(scoreFinal)));
+  }
 }
-
-private calcularScore(historial: any): number {
-  this.cdr.detectChanges();
-
-  console.log('--- OBJETO COMPLETO RECIBIDO ---', historial);
-  const scoreBase = 1000;
-  const deuda = Number(historial.deudaTotal) || 0;
-  const mora = Number(historial.diasMora) || 0;
-  const empresas = Number(historial.numeroEmpresas) || 0;
-  console.log('¿Existe sueldo?', historial.sueldo);
-  const sueldo = Number(historial.sueldo) || 0;
-
-  
-  const penDeuda = deuda / 50;
-  const penMora = mora * 2;
-  const penEmpresas = empresas * 20;
-  const bonoSueldo = (sueldo - 1130) / 100;
-  const scoreFinal = scoreBase - penDeuda - penMora - penEmpresas + bonoSueldo;
-  return Math.max(0, Math.min(1000, Math.round(scoreFinal)));
-  
-}}

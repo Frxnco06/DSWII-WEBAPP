@@ -14,4 +14,10 @@ export class ApiService {
   getProductos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/productos`);
   }
+guardarEvaluacion(payload: any): Observable<any> {
+    return this.http.post('/api/evaluaciones', payload);
+  }
+  listarMisEvaluaciones(): Observable<any[]> {
+    return this.http.get<any[]>('/api/evaluaciones');
+  }
 }

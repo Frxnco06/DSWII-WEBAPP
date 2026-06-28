@@ -1,0 +1,46 @@
+<div class="p-8 bg-[#f5f6fb] min-h-screen font-sans">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Historial de Evaluaciones</h1>
+      <p class="text-sm text-slate-500 mt-1">Visualización de las evaluaciones realizadas por los asesores.</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-white border-b border-gray-200 text-slate-700 text-xs font-bold uppercase tracking-wide">
+        <tr>
+          <th class="px-6 py-4 whitespace-nowrap">DNI CLIENTE</th>
+          <th class="px-6 py-4 whitespace-nowrap">PRODUCTO</th>
+          <th class="px-6 py-4 text-center whitespace-nowrap">SCORE</th>
+          <th class="px-6 py-4 text-center whitespace-nowrap">ESTADO</th>
+          <th class="px-6 py-4 text-center whitespace-nowrap">FECHA</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let item of evaluaciones" class="hover:bg-slate-50 transition-colors even:bg-[#f0f2f8]/50">
+          <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{item.dniCliente}}</td>
+          <td class="px-6 py-4 text-sm text-slate-700">{{item.nombreProducto}}</td>
+          <td class="px-6 py-4 text-sm text-center font-bold text-slate-800">{{item.scoreObtenido}}</td>
+          <td class="px-6 py-4 text-sm text-center">
+            <span [ngClass]="item.estado === 'APROBADO' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                  class="px-2 py-1 rounded-full text-xs font-bold uppercase">
+              {{item.estado}}
+            </span>
+          </td>
+          <td class="px-6 py-4 text-sm text-slate-500 text-center">{{item.fechaEvaluacion | date:'dd/MM/yyyy HH:mm'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between bg-white">
+      <div class="text-sm text-slate-500">Mostrando evaluaciones registradas</div>
+      <div class="flex gap-1.5">
+        <button class="px-3 py-1.5 border border-gray-200 rounded text-sm text-slate-400 hover:bg-slate-50 transition-colors">Anterior</button>
+        <button class="px-3.5 py-1.5 bg-[#0044cc] text-white rounded text-sm font-medium">1</button>
+        <button class="px-3 py-1.5 border border-gray-200 rounded text-sm text-slate-600 hover:bg-slate-50 transition-colors">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>

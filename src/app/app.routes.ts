@@ -42,7 +42,7 @@ export const routes: Routes = [
 },
 
 {
-    path: 'evaluacion',
+    path: 'evaluacion', 
     loadComponent: () => import('./shared/components/layout/dashboard/dashboard').then(m => m.DashboardComponent),
     children: [
       { 
@@ -52,6 +52,10 @@ export const routes: Routes = [
       { 
         path: 'resumen', 
         loadComponent: () => import('./features/evaluaciones/components/evaluacion-resultado/evaluacion-resultado').then(m => m.EvaluacionResultado) 
+      },
+       { 
+        path: 'listado', 
+        loadComponent: () => import('./features/evaluaciones/components/evaluacion-list/evaluacion-list').then(m => m.EvaluacionList) 
       }
     ]
   },
