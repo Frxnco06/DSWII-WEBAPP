@@ -1,0 +1,108 @@
+<div class="p-8 bg-[#f5f6fb] min-h-screen font-sans flex items-start justify-center">
+
+  <div class="w-full max-w-5xl bg-white rounded-2xl shadow-sm border border-slate-200 mt-6 overflow-hidden flex flex-col md:flex-row">
+    
+    <div class="w-full md:w-2/5 bg-slate-50 p-8 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
+      <h2 class="text-2xl font-bold text-slate-800 tracking-tight mb-3">Consulta de Cliente</h2>
+      <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+        Busca a un cliente en la base de datos central mediante su documento de identidad. Verifica su estado de morosidad y perfil general antes de iniciar un proceso crediticio.
+      </p>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-3">
+          <div class="p-2 bg-blue-100 text-blue-700 rounded-lg mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Búsqueda Rápida</h4>
+            <p class="text-xs text-slate-500 mt-1">Ingresa los 8 dígitos exactos del DNI para recuperar la información financiera actualizada.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3">
+          <div class="p-2 bg-blue-100 text-blue-700 rounded-lg mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Evaluación Crediticia</h4>
+            <p class="text-xs text-slate-500 mt-1">Si el perfil cumple con las políticas básicas, podrás generar una nueva evaluación desde esta pantalla.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full md:w-3/5 p-8 flex flex-col">
+
+      <form [formGroup]="searchForm" (ngSubmit)="buscar()" class="flex flex-col sm:flex-row gap-4 items-end mb-6">
+        <div class="flex-1 w-full">
+          <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Ingresar DNI</label>
+          <input 
+            formControlName="dni" 
+            type="text" 
+            maxlength="8" 
+            class="w-full p-3 border border-slate-300 rounded-lg text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0044cc]/20 focus:border-[#0044cc] transition-all placeholder-slate-400" 
+            placeholder="Ej: 99001122">
+        </div>
+        <button 
+          type="submit" 
+          [disabled]="searchForm.invalid" 
+          class="w-full sm:w-auto px-6 py-3 bg-[#0044cc] text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors text-sm shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 h-[46px]">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+          Buscar Cliente
+        </button>
+      </form>
+
+      @if (clienteEncontrado) {
+        <div class="mt-4 p-6 bg-white rounded-xl border border-slate-200 shadow-sm relative overflow-hidden animate-fade-in">
+          <div class="absolute top-0 left-0 w-full h-1 bg-[#0044cc]"></div>
+
+          <div class="flex items-center gap-2 mb-6">
+            <div class="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Datos del Cliente</h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-1">Nombre</p>
+              <p class="font-semibold text-slate-900">{{clienteEncontrado.nombre}} {{clienteEncontrado.apellido}}</p>
+            </div>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-1">DNI</p>
+              <p class="font-semibold text-slate-900">{{clienteEncontrado.dni}}</p>
+            </div>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-1">Deuda Total</p>
+              <p class="font-bold text-red-600">S/ {{clienteEncontrado.deudaTotal}}</p>
+            </div>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-1">Días Mora</p>
+              <p class="font-semibold text-slate-900">{{clienteEncontrado.diasMora}}</p>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+            <button 
+              (click)="generarEvaluacion()" 
+              class="px-6 py-2.5 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors text-sm shadow-sm flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75" />
+              </svg>
+              Evaluar Cliente
+            </button>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+</div>

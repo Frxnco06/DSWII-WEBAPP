@@ -1,19 +1,33 @@
-<div class="p-8 bg-gray-50 min-h-screen font-sans">
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-semibold text-gray-800">Gestión de Productos de Crédito</h2>
-
-    <button (click)="crear()"
-      class="flex items-center gap-2 px-5 py-2.5 bg-[#0044cc] text-white rounded-lg hover:bg-blue-700 font-semibold transition-all shadow-md active:scale-95">
-      <span class="text-xl leading-none">+</span> Nuevo Producto
-    </button>
+<div class="p-8 bg-[#f5f6fb] min-h-screen font-sans">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Productos Financieros</h1>
+      <p class="text-sm text-slate-500 mt-1">Visualización y gestión de productos financieros.</p>
+    </div>
+    <div class="flex gap-3">
+      <button (click)="crear()"
+        class="flex items-center gap-2 px-5 py-2.5 bg-[#0044cc] text-white rounded-lg hover:bg-blue-800 transition-colors text-sm font-semibold shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+          class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        Nuevo Producto
+      </button>
+    </div>
   </div>
 
   <div class="flex justify-between items-center mb-6">
-    <h2 class="text-sm text-gray-500">Administración de productos financieros disponibles.</h2>
     <div class="flex gap-3">
-      <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 font-medium transition-colors">
-        <span class="text-lg">⚙️</span> Filtros
-      </button>
+      <button
+        class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" id="Filter-2--Streamline-Core"
+          height="14" width="14">
+          <g id="filter-2--funnel-filter-angle-oil">
+            <path id="Union" fill="#000000" fill-rule="evenodd"
+              d="M0.5 0C0.312706 0 0.141118 0.104674 0.0554162 0.271209 -0.030286 0.437745 -0.015729 0.638212 0.0931333 0.790619L5 7.66023V13.5c0 0.1844 0.10149 0.3538 0.26407 0.4408 0.16258 0.087 0.35985 0.0775 0.51328 -0.0248l3 -2C8.91645 11.8233 9 11.6672 9 11.5V7.66023L13.9069 0.790619c0.1088 -0.152407 0.1234 -0.352874 0.0377 -0.51941C13.8589 0.104674 13.6873 0 13.5 0H0.5Z"
+              clip-rule="evenodd" stroke-width="1"></path>
+          </g>
+        </svg> </button>
     </div>
   </div>
 
@@ -35,14 +49,16 @@
         <tr *ngFor="let item of productos" class="hover:bg-slate-50 transition-colors even:bg-[#f0f2f8]/50">
           <td class="px-6 py-4 text-sm text-slate-500">#{{item.productoId}}</td>
           <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{item.nombreProducto}}</td>
-          <td class="px-6 py-4 text-sm text-slate-700 text-center">{{item.montoMinimo | currency:'USD':'symbol':'1.0-0'}}</td>
-          <td class="px-6 py-4 text-sm text-slate-700 text-center">{{item.montoMaximo | currency:'USD':'symbol':'1.0-0'}}</td>
+          <td class="px-6 py-4 text-sm text-slate-700 text-center">{{item.montoMinimo |
+            currency:'USD':'symbol':'1.0-0'}}</td>
+          <td class="px-6 py-4 text-sm text-slate-700 text-center">{{item.montoMaximo |
+            currency:'USD':'symbol':'1.0-0'}}</td>
           <td class="px-6 py-4 text-sm text-slate-700 text-center">{{item.tasaInteres}}%</td>
           <td class="px-6 py-4 text-sm text-slate-700 text-center font-bold">{{item.scoreMinimo}}</td>
 
           <td class="px-6 py-4 flex items-center justify-center gap-4 text-slate-400">
 
-            
+
             <button (click)="verDetalle(item)" class="transition-colors hover:text-slate-800 focus:outline-none"
               title="Ver">
               <svg style="pointer-events: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -52,15 +68,21 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
-            
-            <button (click)="editar(item)" class="transition-colors hover:text-slate-800 focus:outline-none" title="Editar">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+
+            <button (click)="editar(item)" class="transition-colors hover:text-slate-800 focus:outline-none"
+              title="Editar">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
               </svg>
             </button>
-            <button (click)="eliminar(item)" class="transition-colors hover:text-red-600 focus:outline-none" title="Eliminar Producto">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.12-2.212a48.666 48.666 0 00-6.86 0c-1.21.048-2.12 1.032-2.12 2.212v.916m7.5 0" />
+            <button (click)="eliminar(item)" class="transition-colors hover:text-red-600 focus:outline-none"
+              title="Eliminar Producto">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.12-2.212a48.666 48.666 0 00-6.86 0c-1.21.048-2.12 1.032-2.12 2.212v.916m7.5 0" />
               </svg>
             </button>
           </td>
@@ -75,22 +97,12 @@
     <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between bg-white">
       <div class="text-sm text-slate-500">Mostrando productos registrados</div>
       <div class="flex gap-1.5">
-        <button class="px-3 py-1.5 border border-gray-200 rounded text-sm text-slate-400 hover:bg-slate-50 transition-colors">Anterior</button>
+        <button
+          class="px-3 py-1.5 border border-gray-200 rounded text-sm text-slate-400 hover:bg-slate-50 transition-colors">Anterior</button>
         <button class="px-3.5 py-1.5 bg-[#0044cc] text-white rounded text-sm font-medium">1</button>
-        <button class="px-3 py-1.5 border border-gray-200 rounded text-sm text-slate-600 hover:bg-slate-50 transition-colors">Siguiente</button>
+        <button
+          class="px-3 py-1.5 border border-gray-200 rounded text-sm text-slate-600 hover:bg-slate-50 transition-colors">Siguiente</button>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-

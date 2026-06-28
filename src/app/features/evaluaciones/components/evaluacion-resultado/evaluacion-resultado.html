@@ -1,0 +1,27 @@
+<div class="p-8 max-w-4xl mx-auto">
+  <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+    <h2 class="text-xl font-bold mb-4 text-slate-800">Resultado de Evaluación</h2>
+    
+    <div class="grid grid-cols-2 gap-4 mb-6 p-4 bg-slate-50 rounded-xl">
+      <p><strong>Cliente:</strong> {{cliente.nombre}} {{cliente.apellido}}</p>
+      <p><strong>DNI:</strong> {{cliente.dni}}</p>
+    </div>
+
+    <div class="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
+      <p class="text-blue-800 font-semibold text-lg">Score calculado: 
+        <span class="font-extrabold">{{scoreFinal}} / 1000</span>
+      </p>
+    </div>
+
+    <h3 class="text-xl font-bold mb-4 text-green-700">Productos Accesibles</h3>
+    
+    @for (p of productosAptos; track p.productoId) {
+      <div class="p-4 border rounded-xl mb-2 flex justify-between">
+        <span>{{p.nombreProducto}}</span>
+        <span class="font-bold text-green-600">APTO</span>
+      </div>
+    } @empty {
+      <p class="text-red-500 font-bold">No califica para productos.</p>
+    }
+  </div>
+</div>

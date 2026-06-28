@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from '../../shared/components/layout/dashboard/dashboard';
 
-export const FINANZAS_ROUTES: Routes = [
+export const PRODUCTOS_ROUTES: Routes = [
   {
     path: '',
     component: DashboardComponent,

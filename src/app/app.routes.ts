@@ -40,5 +40,21 @@ export const routes: Routes = [
       }
   ]
 },
+
+{
+    path: 'evaluacion',
+    loadComponent: () => import('./shared/components/layout/dashboard/dashboard').then(m => m.DashboardComponent),
+    children: [
+      { 
+        path: 'buscar', 
+        loadComponent: () => import('./features/evaluaciones/components/evaluacion-buscar/evaluacion-buscar').then(m => m.EvaluacionBuscarComponent) 
+      },
+      { 
+        path: 'resumen', 
+        loadComponent: () => import('./features/evaluaciones/components/evaluacion-resultado/evaluacion-resultado').then(m => m.EvaluacionResultado) 
+      }
+    ]
+  },
+
   { path: '**', redirectTo: 'login' }
 ];
